@@ -44,57 +44,49 @@ public class LoginServlet extends HttpServlet {
 			// data access object (DAO) for getting database connection, object, etc
             LoginDAO cdao = new LoginDAO();
              boolean b;
-             
+            
+			/**
+			request get param gives form data . the "userName" is used in 
+			<input name="userName" >
+			
+			*/
             l.setUserName(request.getParameter("userName"));
             l.setPassWord(request.getParameter("passWord"));
+			
             System.out.println("In LoginServlet....");
+			
             String name=request.getParameter("email");  
+			
+			// call DAO function
             b = cdao.checkLogin(l);
             if(b)
             {	
-                System.out.println("in if");
                 
-				// get details from BaseDAO 
-				BaseDAO bdao=new BaseDAO();
-				
-				//Person p = new Person();
-				
-				Person p = bdao.setProfile(l);
-				//set Person as sessionScope
-				
-				
-				//set Person as requestScope
-				
-				
-				
-				//request.setAttribute("Person",p);
-                
+                // session global variable
 				HttpSession session=request.getSession();  
-                                session.setAttribute("Person",p);  
-				session.setAttribute("userName",p.getEmail());  
                 
-
+				// new attribute to session variable. this value will be stored throughout session
+				session.setAttribute("userName",l.getUserName());  
+                
+				// to forward response/output to a jsp page
                 RequestDispatcher rd;
+				
                 if(l.getType().equals("p"))
-                rd = request.getRequestDispatcher("profile.jsp");
+					rd = request.getRequestDispatcher("profile.jsp");
                 else
                     rd = request.getRequestDispatcher("adminprofile.jsp");
+				
+				// send response
                 rd.forward(request, response);
             }                
             else
             {
+				
+				// invalid login
                 System.out.println("in else");
                response.sendRedirect("login.jsp");
             }   
-            /*
-                HttpSession session = request.getSession(false);// don't create if it doesn't exist
-        if(session != null && !session.isNew()) {
-                RequestDispatcher rd;
-                rd = request.getRequestDispatcher("profile.jsp");               
-                rd.forward(request, response);
-        } else {
-            response.sendRedirect("login.jsp");
-        }*/
+           
             }
         
             
