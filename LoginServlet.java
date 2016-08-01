@@ -38,10 +38,11 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            
-                Login l = new Login();      //classify types
-            
-             LoginDAO cdao = new LoginDAO();  //classify types
+            // model to store database table data in java object
+			Login l = new Login();            
+			
+			// data access object (DAO) for getting database connection, object, etc
+            LoginDAO cdao = new LoginDAO();
              boolean b;
              
             l.setUserName(request.getParameter("userName"));
@@ -138,7 +139,16 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+            
+			/**
+				in NetBeans, you get defaut method processRequest. So put logic in processRequest in doPost if post request.
+			*/
+			
+			processRequest(request, response);
+			
+			
+			
+			
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

@@ -24,6 +24,7 @@ and open the template in the editor.
         
         <div class="container">
         <div class="ui two column middle aligned very relaxed stackable grid" align="center">
+		<!-- main place to call form action. This action is handled by LoginServlet by using action url and method -->
             <form method="post" action="LoginServlet.do" onsubmit="return true">
             <div class="column">
                 <div class="ui form">
